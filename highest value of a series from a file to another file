@@ -1,0 +1,36 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
+public class ReadAndWrite {
+    public static void main(String[] args) {
+        String inputFileName = "input.txt";
+        String outputFileName = "output.txt";
+
+        double highest = Double.NEGATIVE_INFINITY;
+        double sum = 0;
+
+        try (Scanner sc = new Scanner(new File(inputFileName));
+             PrintWriter pw = new PrintWriter(outputFileName)) {
+
+            // Read numbers from file
+            while (sc.hasNextDouble()) {
+                double value = sc.nextDouble();
+                sum += value;
+                if (value > highest) {
+                    highest = value;
+                }
+            }
+
+            // Write results to output file
+            pw.println("Highest value: " + highest);
+            pw.println("Sum: " + sum);
+
+            System.out.println("Processing complete. Check " + outputFileName);
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
